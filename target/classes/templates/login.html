@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Application Sécurisée</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-box {
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+            width: 340px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+        h2 {
+            text-align: center;
+            color: #2b5797;
+            margin-bottom: 25px;
+            font-size: 22px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #2b5797;
+        }
+        button {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 6px;
+            background: #2b5797;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        button:hover { background: #1e3f6e; }
+        .msg-error {
+            background: #fdecea;
+            color: #c0392b;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-align: center;
+        }
+        .msg-logout {
+            background: #eafaf1;
+            color: #27ae60;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-align: center;
+        }
+        .hint {
+            margin-top: 20px;
+            background: #f0f4ff;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 13px;
+            color: #555;
+        }
+        .hint p { margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>🔐 Authentification</h2>
+
+        <!-- Message d'erreur si identifiants incorrects -->
+        <div th:if="${param.error}" class="msg-error">
+            ❌ Identifiants incorrects, veuillez réessayer.
+        </div>
+
+        <!-- Message de succès après déconnexion -->
+        <div th:if="${param.logout}" class="msg-logout">
+            ✅ Vous êtes déconnecté avec succès.
+        </div>
+
+        <!-- Formulaire → envoyé vers /authenticate (intercepté par Spring Security) -->
+        <form th:action="@{/authenticate}" method="post">
+
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" id="username" name="username"
+                   placeholder="Saisir le nom d'utilisateur" required />
+
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password"
+                   placeholder="Mot de passe" required />
+
+            <button type="submit">Se connecter</button>
+        </form>
+
+        <div class="hint">
+            <p>👤 <strong>user</strong> / 1111 → Espace utilisateur</p>
+            <p>🔑 <strong>admin</strong> / 1234 → Espace administrateur</p>
+        </div>
+    </div>
+</body>
+</html>

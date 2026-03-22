@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Espace Utilisateur</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f4f4f4; }
+        .navbar {
+            background: #3498db;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a { color: white; text-decoration: none; margin-left: 15px; }
+        .container { max-width: 750px; margin: 50px auto; padding: 0 20px; }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        h2 { color: #2c3e50; margin-bottom: 15px; }
+        p { color: #555; line-height: 1.7; margin-bottom: 10px; }
+        .info {
+            background: #eaf4fb;
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin: 15px 0;
+            font-size: 14px;
+            color: #2471a3;
+        }
+        a.btn {
+            display: inline-block;
+            padding: 9px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 5px 5px 0 0;
+        }
+        .btn-home   { background: #95a5a6; color: white; }
+        .btn-logout { background: #e74c3c; color: white; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <span>👤 Espace Utilisateur</span>
+        <div>
+            <span sec:authentication="name"></span>
+            <a th:href="@{/home}">| Accueil</a>
+            <a th:href="@{/logout}">| Déconnexion</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>👤 Tableau de bord Utilisateur</h2>
+            <p>Bonjour <strong sec:authentication="name">Utilisateur</strong> !</p>
+            <p>Cette page est accessible aux rôles <strong>USER</strong> et <strong>ADMIN</strong>.</p>
+
+            <div class="info">
+                ℹ️ Spring Security a vérifié ton rôle avant d'autoriser l'accès à cette page.
+                La règle appliquée : <code>hasAnyRole("USER", "ADMIN")</code>
+            </div>
+
+            <a href="/home" class="btn btn-home">🏠 Retour à l'accueil</a>
+            <a href="/logout" class="btn btn-logout">🚪 Déconnexion</a>
+        </div>
+    </div>
+</body>
+</html>
